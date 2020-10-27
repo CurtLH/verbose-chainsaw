@@ -1,5 +1,5 @@
 import json
-from botocore.vendored import requests
+import requests
 
 def lambda_handler(event, context):
     r = requests.get("https://httpbin.org/get?key=10")
