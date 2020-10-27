@@ -1,11 +1,8 @@
-import logging
+import json
 from bs4 import BeautifulSoup as bs
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
-# set up basic logging
-logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 # create a session
 s = requests.Session()
@@ -16,11 +13,9 @@ s.headers.update(
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"
     }
 )
-logging.info("Requests session created")
 
 # submit a request for the first page of ads
 r = s.get("http://boston.skipthegames.com/")
-logging.info(f"Request submitted - status code {r.status_code}")
 
 # get the URLs to all of the ads
 urls = []
@@ -32,4 +27,9 @@ for h in href:
         urls.append(h.get("href"))
     else:
         pass
-logging.info(f"There are {len(urls)} found")
+
+def lambda_handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps(f"There are {len(urls)} found")
+}
