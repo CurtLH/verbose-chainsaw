@@ -4,7 +4,7 @@ Source: https://docs.aws.amazon.com/lambda/latest/dg/python-package.html#python-
 
 ## How to upload new version
 ```
-pip install --target ./package requests
+pip install --target ./package -r requirements.txt 
 cd package
 zip -r9 ${OLDPWD}/function.zip .
 cd $OLDPWD
